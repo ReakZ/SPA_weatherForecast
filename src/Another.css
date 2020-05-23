@@ -32,4 +32,7 @@ ul{
   .text-muted{
       color:#6c757d!important
   }
-
+*{
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

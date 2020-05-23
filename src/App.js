@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-//import "./App.css";
 import WeatherDisplay from "./weatherDisplay";
+import WeatherGraph from "./weatherGraph";
+import WeatherForecast from "./weatherForecast";
 import {
   Navbar,
   Row,
@@ -12,9 +13,7 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
-import WeatherGraph from "./weatherGraph";
 import "bootstrap/dist/css/bootstrap.min.css";
-import WeatherForecast from "./weatherForecast";
 const PLACES = [
   { name: "Балахна", zip: "579514" },
   { name: "Нижний Новгород", zip: "520555" },
