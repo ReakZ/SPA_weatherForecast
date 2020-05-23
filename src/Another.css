@@ -1,3 +1,20 @@
 ul{
     list-style: none;
 }
+.recharts-legend-wrapper{
+    bottom:5px !important;
+}
+
+/* .line-chart-wrapper{
+    padding-left: 100px;
+    padding-left: -50px !important;
+} */
+
+.recharts-wrapper{
+    
+    margin-left: -50px;
+}
+
+.recharts-legend-item{
+    margin-right: 50px !important;
+}

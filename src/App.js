@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 //import "./App.css";
 import WeatherDisplay from "./weatherDisplay";
-import { Navbar, Row, Col, Container, ButtonGroup } from "react-bootstrap";
-
+import { Navbar, Row, Col, Container, ButtonGroup,Nav} from "react-bootstrap";
+import WeatherGraph from './weatherGraph';
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import WeatherForecast from './weatherForecast'
 const PLACES = [
   { name: "Балахна", zip: "579514" },
   { name: "Нижний Новгород", zip: "520555" },
@@ -27,13 +27,20 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand>Погода</Navbar.Brand>
+          <Navbar.Brand>Погода в Доме <img src="./icons/c03d.png" alt="" width="32" height="32"/></Navbar.Brand>
+          <Nav className="mr-auto">
+      <Nav.Link href="#home">Home</Nav.Link>
+      <Nav.Link href="#features">Features</Nav.Link>
+      <Nav.Link href="#pricing">Pricing</Nav.Link>
+    </Nav>
         </Navbar>
 
-        <Container>
+        <Container fluid>
           <Row>
-            <Col sm={4}>
-              <h1>Выберите город:</h1>{" "}
+            <Col sm={2}>
+
+              
+              <h4>Города:</h4>{" "}
               <ButtonGroup vertical>
                 {PLACES.map((x, i) => (
                   <button
@@ -46,16 +53,26 @@ class App extends Component {
                   </button>
                 ))}
               </ButtonGroup>
+
             </Col>
 
-            <Col sm={8}>
+            <Col sm={4}>
               <WeatherDisplay
                 city={this.state.active}
                 key={this.state.active.zip}
               />
             </Col>
+
+            <Col sm={6}>
+            <WeatherGraph city={this.state.active}/>
+            <WeatherForecast city={this.state.active}/>
+            </Col>
           </Row>
+          
+         
+          
         </Container>
+       
       </div>
     );
   }
