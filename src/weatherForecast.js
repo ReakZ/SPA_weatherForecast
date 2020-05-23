@@ -24,7 +24,7 @@ class WeatherForecast extends Component {
         </h4>
           <LineChart
             width={600}
-            height={400}
+            height={300}
             data={this.state.weatherWeekData}
             margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
           >

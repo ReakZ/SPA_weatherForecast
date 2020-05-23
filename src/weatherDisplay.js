@@ -19,27 +19,43 @@ class WeatherDisplay extends Component {
 
   render() {
     let properties=[{name:'temp',loc:'Температура',symbol:'°C'},
+    {name:'weather',loc:'Погода',symbol:''},
+    {name:'wind_cdir_full',loc:'Ветер',symbol:''},
+    {name:'wind_dir',loc:'Направление ветра',symbol:'ч'},
+    {name:'wind_spd',loc:'Скорость ветра',symbol:'м/с'},
     {name:'clouds',loc:'Облачность',symbol:'%'},
-    {name:'sunrise',loc:'Восход',symbol:'UTC 0'},
-    {name:'sunset',loc:'Закат',symbol:'UTC 0'},
     {name:'pres',loc:'Давление',symbol:'мм'},
     {name:'rh',loc:'Влажность',symbol:'%'},
     {name:'vis',loc:'Видимость',symbol:'М'},
-    {name:'snow',loc:'Осадки',symbol:'мм'}]
-
+    {name:'snow',loc:'Осадки',symbol:'мм'},
+    {name:'sunrise',loc:'Восход',symbol:'UTC+0'},
+    {name:'sunset',loc:'Закат',symbol:'UTC+0'},]
+    function normalize(data){
+      if (typeof data=='number'){
+        return Math.round(data)
+      }
+      if (typeof data=='object'){
+        return data.description
+      }
+      return data
+    }
     const dataWeather = this.state.weatherData
       ? this.state.weatherData.data.data[0]
       : null;
-    const lol = dataWeather ? dataWeather.weather.icon : null;
-    const iconUrl = "icons\\" + lol + ".png";
+    const img = dataWeather ? dataWeather.weather.icon : null;
+    const iconUrl = "icons\\" + img + ".png";
     return (
       <>
-      {!dataWeather?<Spinner animation="border" role="status">
+      {!dataWeather?<Spinner animation="border" role="status" style={{margin:'50%'}}>
   <span className="sr-only">Loading...</span>
 </Spinner>:
       <div>
         <h2>
-          Погода на {Date().getString} в г.{this.props.city.name}{" "}
+          Погода в г.{this.props.city.name} <br/>{new Date().toLocaleString('ru', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })} {" "}
           <img src={iconUrl} alt="img" width="64" height="64" />
         </h2>
 
@@ -48,7 +64,7 @@ class WeatherDisplay extends Component {
 
   <tbody>
     {
-      properties.map(pro=>dataWeather[pro.name]?<tr key={pro.name}><td>{pro.loc}:</td><td>{`${dataWeather[pro.name]} ${pro.symbol}`}</td> </tr>:null)
+      properties.map(pro=>dataWeather[pro.name]?<tr key={pro.name}><td>{pro.loc}:</td><td>{`${normalize(dataWeather[pro.name])} ${pro.symbol}`}</td> </tr>:null)
     }
   </tbody>
 </Table>
@@ -62,13 +78,3 @@ class WeatherDisplay extends Component {
 export default WeatherDisplay;
 
 
-{/* <ul>
-<li>Облачность: {dataWeather ? dataWeather.clouds : null}%</li>
-<li>Восход: {dataWeather ? dataWeather.sunset : null}</li>
-<li>Закат: {dataWeather ? dataWeather.sunrise : null}</li>
-<li>Температура: {dataWeather ? dataWeather.temp : null}</li>
-<li>Давление: {dataWeather ? dataWeather.pres : null}</li>
-<li>Влажность: {dataWeather ? dataWeather.rh : null}</li>
-<li>Видимость: {dataWeather ? dataWeather.vis : null}</li>
-<li> {dataWeather > 0 ? dataWeather.snow : null}</li>
-        </ul> */}

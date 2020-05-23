@@ -1,10 +1,20 @@
 import React, { Component } from "react";
 //import "./App.css";
 import WeatherDisplay from "./weatherDisplay";
-import { Navbar, Row, Col, Container, ButtonGroup,Nav} from "react-bootstrap";
-import WeatherGraph from './weatherGraph';
+import {
+  Navbar,
+  Row,
+  Col,
+  Container,
+  NavDropdown,
+  Nav,
+  Form,
+  FormControl,
+  Button,
+} from "react-bootstrap";
+import WeatherGraph from "./weatherGraph";
 import "bootstrap/dist/css/bootstrap.min.css";
-import WeatherForecast from './weatherForecast'
+import WeatherForecast from "./weatherForecast";
 const PLACES = [
   { name: "Балахна", zip: "579514" },
   { name: "Нижний Новгород", zip: "520555" },
@@ -27,35 +37,35 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand>Погода в Доме <img src="./icons/c03d.png" alt="" width="32" height="32"/></Navbar.Brand>
+          <Navbar.Brand href="/">
+            Погода в Доме{" "}
+            <img src="./icons/c03d.png" alt="" width="32" height="32" />
+          </Navbar.Brand>
           <Nav className="mr-auto">
-      <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#features">Features</Nav.Link>
-      <Nav.Link href="#pricing">Pricing</Nav.Link>
-    </Nav>
+            {PLACES.map((x, i) => (
+              <Nav.Link onClick={this.handler(x)}>{x.name}</Nav.Link>
+            ))}
+
+            <NavDropdown title="Другие города... " id="collasible-nav-dropdown">
+              <NavDropdown.Item>Санкт Петербург</NavDropdown.Item>
+
+              <NavDropdown.Item>Владивосток</NavDropdown.Item>
+
+              <NavDropdown.Item>Заволжье</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+          <Form inline>
+            <FormControl
+              type="text"
+              placeholder="Название города"
+              className="mr-sm-2"
+            />
+            <Button variant="outline-secondary">Найти</Button>
+          </Form>
         </Navbar>
 
-        <Container fluid>
+        <Container>
           <Row>
-            <Col sm={2}>
-
-              
-              <h4>Города:</h4>{" "}
-              <ButtonGroup vertical>
-                {PLACES.map((x, i) => (
-                  <button
-                    onClick={this.handler(x)}
-                    className="btn btn-primary"
-                    key={i}
-                  >
-                    {" "}
-                    {x.name}{" "}
-                  </button>
-                ))}
-              </ButtonGroup>
-
-            </Col>
-
             <Col sm={4}>
               <WeatherDisplay
                 city={this.state.active}
@@ -64,15 +74,19 @@ class App extends Component {
             </Col>
 
             <Col sm={6}>
-            <WeatherGraph city={this.state.active}/>
-            <WeatherForecast city={this.state.active}/>
+              <WeatherGraph city={this.state.active} />
+              <WeatherForecast city={this.state.active} />
             </Col>
           </Row>
-          
-         
-          
         </Container>
-       
+        <footer className="footer">
+          <Container>
+            <span className="text-muted">
+              Weather in home 2020{" "}
+              <a href="https://github.com/ReakZ/">GitHub</a>
+            </span>
+          </Container>
+        </footer>
       </div>
     );
   }
